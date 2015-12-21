@@ -1,48 +1,32 @@
 # Secken Private Cloud Server SDK For Nodejs
 
-## 简介（Description）
-官方提供了一套用于和洋葱验证服务交互的SDK组件，通过使用它，您可以简化集成Secken服务的流程并降低开发成本。
+## Description
+Nodejs SDK for Secken-SDK Server
 
-密码就要大声说出来，开启无密时代，让密码下岗
+Website: https://www.yangcong.com
 
-洋葱是一个基于云和用户生物特征的身份验证服务。网站通过集成洋葱，可以快速实现二维码登录，或在支付、授权等关键业务环节使用指纹、声纹或人脸识别功能，从而彻底抛弃传统的账号密码体系。对个人用户而言，访问集成洋葱服务的网站将无需注册和记住账号密码，直接使用生物特征验证提高了交易安全性，无需担心账号被盗。洋葱还兼容 Google 验证体系，支持国内外多家网站的登录令牌统一管理。
+Wechat: yangcongAPP
 
-【联系我们】
+Wechat Group: http://t.cn/RLGDwMJ
 
-官网：https://www.yangcong.com
+QQ: 475510094
 
-微信：yangcongAPP
+Sina Weibo: http://weibo.com/secken
 
-微信群：http://t.cn/RLGDwMJ
+Business: 010-64772882 / market@secken.com
 
-QQ群：475510094
+Support: support@secken.com
 
-微博：http://weibo.com/secken
+Documents: https://www.yangcong.com/help
 
-帮助：https://www.yangcong.com/help
-
-合作：010-64772882 / market@secken.com
-
-支持：support@secken.com
-
-帮助文档：https://www.yangcong.com/help
-
-项目地址：https://github.com/secken/Secken-Server-SDK-For-Nodejs
-
-洋葱SDK产品服务端SDK主要包含四个方法：
-* 获取二维码的方法（ getQrcode ），用于获取二维码内容和实现绑定。
-* 请求推送验证的方法（ postAuthPush ），用于发起对用户的推送验证操作。
-* 查询事件结果的方法（ getResult ），用于查询二维码登录或者推送验证的结果。
-* 复验验证结果的方法（ checkAuthToken ），用于复验移动端SDK验证的结果。
-
-## 安装使用（Install & Get Started）
+## Install && Usage
 
 To install Secken.Private.ServerSdk, Import these packages
 
 ```
 npm install secken-sdk
 ```
-使用
+
 ```
 let SeckenSDK = require('secken-sdk');
 let sdk = new SeckenSDK({
@@ -50,27 +34,26 @@ let sdk = new SeckenSDK({
     app_key: 'appkey',
 });
 ```
-`本程序接口都以 Promise 形式返回`
+all the functions in SDK will return a `Promise` object by node module `Q`
 
-## 更新发布（Update & Release Notes）
+## Release
 
+#### 0.0.2
+* Update Readme
 #### 0.0.1
-1. 完成基本 API 接口的封装
+* Add `#getQrcode`, `#postAuthPush`, `#getResult`, `#checkAuthToken`
 
-## 要求和配置（Require & Config）
-```
-Node 5.0.0+
-```
+Secken-SDK wrote by `ES6`, please using in `Node 5.0 +`
 
-## 获取二维码内容并发起验证事件（getQrcode）
+## getQrcode (get a qrcode picture for auth)
 ```
 sdk.getQrcode(options).then(data => {
-    // data.qrcode_url 二维码地址
-    // data.event_id   事件 ID
+    // data.qrcode_url
+    // data.event_id   
 });
 ```
 
-参数:
+params:
 ```
 options = {
     auth_type: '',
@@ -80,97 +63,98 @@ options = {
 }
 ```
 
-|    状态码   | 		状态详情 		  |
-|:----------:|:-----------------:|
-|  200       |       成功         |
-|  400       |       上传参数错误  |
-|  403       |       签名错误                |
-|  404       |       应用不存在                |
-|  407       |       请求超时                |
-|  500       |       系统错误                |
-|  609       |       ip地址被禁                |
+|    status    | 		description 	    |
+|:----------:|:----------------------------:|
+|  200       |       OK                     |
+|  400       |       params error           |
+|  403       |       signature error        |
+|  404       |       no such app id         |
+|  407       |       time out               |
+|  500       |       system error           |
+|  609       |       ip address blocked     |
 
-## 查询验证事件的结果（getResult）
+## getResult (get action result by event id)
 
-接受两个参数：`event_id` 和 `times`，默认 `times` 为 `2000`，表示程序将以 2000毫秒 的时间间隔循环查询结果，每次结果将以 notify 形式返回。如果 `times` 为 `false`，则只请求一次，不循环查询.
+accept 2 params: `event_id` and `times`
+
+`times` will set `2000` by default, the function will get result in loop with delay time 2000 ms, by setting `times` to change the loop delay time, if `times` was `false`, function will run only one times
 
 ```
 sdk.getQrcode(options).then(data => {
     return sdk.getResult(data.event_id, times);
 }).then(data => {
-    // 查询成功
+    // success
 }, error => {
-    // 错误
+    // error
 }, notify => {
-    // 等待用户响应，轮询查询结果
+    // waiting for user auth, status 602
 });
 ```
 
-|    状态码   | 		状态详情 		  |
-|:----------:|:-----------------:|
-|  200       |       成功         |
-|  201       |       事件已被处理                |
-|  400       |       上传参数错误  |
-|  403       |       签名错误                |
-|  404       |       应用不存在                |
-|  407       |       请求超时                |
-|  500       |       系统错误                |
-|  601       |       用户拒绝                |
-|  602       |       用户还未操作                |
-|  604       |       事件不存在                |
-|  606       |       callback已被设置                |
-|  609       |       ip地址被禁                |
+|    status  | 		description 	            |
+|:----------:|:--------------------------------:|
+|  200       |       OK                         |
+|  201       |       event has been resolved    |
+|  400       |       params error               |
+|  403       |       signature error            |
+|  404       |       no such app id             |
+|  407       |       time out                   |
+|  500       |       system error               |
+|  601       |       reject by user             |
+|  602       |       waiting for user auth      |
+|  604       |       no such event id           |
+|  606       |       callback is set            |
+|  609       |       ip address blocked         |
 
-## 发起推送验证事件（postAuthPush）
+## postAuthPush (push a message to user for auth)
 ```
 sdk.postAuthPush({
     uid: "",
 }).then(data => {
-    // 成功
+    // success
 }, error => {
-    // 失败
+    // failed
 });
 ```
 
-参数:
+params:
 ```
 options = {
-    uid: "",   // 必填
+    uid: "",   // required
     auth_type: "",
     action_type: "",
     action_details: ""
 }
 ```  
 
-|    状态码   | 		状态详情 		  |
-|:----------:|:-----------------:|
-|  200       |       成功         |
-|  400       |       上传参数错误  |
-|  403       |       签名错误                |
-|  404       |       应用不存在                |
-|  407       |       请求超时                |
-|  500       |       系统错误                |
-|  608       |       验证token不存在           |
-|  609       |       ip地址被禁                |
+|    status  | 		description 		      |
+|:----------:|:------------------------------:|
+|  200       |       OK                       |
+|  400       |       params error             |
+|  403       |       signature error          |
+|  404       |       no such app id           |
+|  407       |       time out                 |
+|  500       |       system error             |
+|  609       |       ip address blocked       |
 
-## 复验验证结果的方法（checkAuthToken）
+## checkAuthToken (check auth token)
 ```
 sdk.checkAuthToken({
     auth_token: "1234567890123456789012345678901234567890",
 }).then(data => {
-    // 成功
+    // success
 }, error => {
-    // 失败
+    // failed
 });
 ```
 
-|    状态码   | 		状态详情 		  |
-|:----------:|:-----------------:|
-|  200       |       成功         |
-|  400       |       上传参数错误  |
-|  403       |       签名错误                |
-|  404       |       应用不存在                |
-|  407       |       请求超时                |
-|  500       |       系统错误                |
-|  608       |       验证token不存在           |
-|  609       |       ip地址被禁                |
+|    status   | 		desciption 		     |
+|:----------:|:-----------------------------:|
+|  200       |       OK                      |
+|  400       |       params error            |
+|  403       |       signature error         |
+|  404       |       no such app id          |
+|  407       |       time out                |
+|  500       |       system error            |
+|  608       |       no such token           |
+|  609       |       ip address blocked      |
