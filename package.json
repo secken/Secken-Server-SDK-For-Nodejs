@@ -1,0 +1,24 @@
+{
+  "name": "secken-sdk",
+  "version": "0.0.1",
+  "description": "Nodejs module for Secken SDK",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "lazy.js": "^0.4.2",
+    "q": "^1.4.1",
+    "request": "^2.67.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:secken/Secken-Server-SDK-For-Nodejs.git"
+  },
+  "author": "Secbone",
+  "license": "ISC"
+}
