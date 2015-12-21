@@ -40,7 +40,7 @@ all the functions in SDK will return a `Promise` object by node module `Q`
 
 ## Release
 
-#### 0.0.2
+#### 0.0.3
 * Update Readme
 #### 0.0.1
 * Add `#getQrcode`, `#postAuthPush`, `#getResult`, `#checkAuthToken`

@@ -1,6 +1,6 @@
 {
   "name": "secken-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nodejs module for Secken SDK",
   "main": "index.js",
   "directories": {
