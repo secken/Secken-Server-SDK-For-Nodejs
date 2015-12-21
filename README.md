@@ -1,5 +1,7 @@
 # Secken Private Cloud Server SDK For Nodejs
 
+[中文文档](https://github.com/secken/Secken-Server-SDK-For-Nodejs/blob/master/CN.md)
+
 ## Description
 Nodejs SDK for Secken-SDK Server
 
