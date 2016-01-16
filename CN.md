@@ -54,6 +54,9 @@ let sdk = new SeckenSDK({
 
 ## 更新发布（Update & Release Notes）
 
+#### 1.0.0
+1. 更新单元测试
+
 #### 0.0.1
 1. 完成基本 API 接口的封装
 

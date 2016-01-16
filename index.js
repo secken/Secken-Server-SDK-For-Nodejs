@@ -1,9 +1,9 @@
 "use strict"
 
-let Q = require("q");
-let lazy = require("lazy.js");
-let crypto = require("crypto");
-let request = require("request");
+const Q = require("q");
+const lazy = require("lazy.js");
+const crypto = require("crypto");
+const request = require("request");
 
 class SeckenSDK {
     constructor(options) {
@@ -141,7 +141,7 @@ class SeckenSDK {
                 }
             })
             .toObject();
-        
+
         params.signature = this.getSignature(params);
 
         return this.request("/realtime_authorization", params, "POST");

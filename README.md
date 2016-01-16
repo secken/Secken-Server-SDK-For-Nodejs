@@ -1,5 +1,9 @@
 # Secken Private Cloud Server SDK For Nodejs
 
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Downloads][downloads-image]][downloads-url]
+
 [中文文档](https://github.com/secken/Secken-Server-SDK-For-Nodejs/blob/master/CN.md)
 
 ## Description
@@ -39,6 +43,9 @@ let sdk = new SeckenSDK({
 all the functions in SDK will return a `Promise` object by node module `Q`
 
 ## Release
+
+#### 1.0.0
+* Add unit testing
 
 #### 0.0.3
 * Update Readme
@@ -160,3 +167,11 @@ sdk.checkAuthToken({
 |  500       |       system error            |
 |  608       |       no such token           |
 |  609       |       ip address blocked      |
+
+
+[npm-image]: https://img.shields.io/npm/v/secken-sdk.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/secken-sdk
+[downloads-image]: http://img.shields.io/npm/dm/secken-sdk.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/secken-sdk
+[travis-image]: https://img.shields.io/travis/secken/Secken-Server-SDK-For-Nodejs.svg?style=flat-square
+[travis-url]: https://travis-ci.org/secken/Secken-Server-SDK-For-Nodejs
