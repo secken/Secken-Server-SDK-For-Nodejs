@@ -1,0 +1,8 @@
+before_script:
+    - wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
+    - nvm install node
+    - nvm use node
+    - npm install --save-dev
+test:
+    script:
+        - mocha --timeout 30000
